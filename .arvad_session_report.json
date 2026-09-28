@@ -5,7 +5,8 @@
     "css/styles.css",
     "js/main.js",
     "inventory.html",
-    "js/inventory.js"
+    "js/inventory.js",
+    "data/vehicles.json"
   ],
   "files_modified": [
     "README.md",
@@ -73,13 +74,28 @@
     {
       "what": "Added js/inventory.js script tag with defer before </body> in inventory.html (step 4)",
       "why": "Non-blocking deferred load ensures DOM-ready execution, matching the established pattern from main.js"
+    },
+    {
+      "what": "Created data/ directory before writing vehicles.json",
+      "why": "The directory did not exist on disk; it was referenced in the README folder structure but not present in the working tree"
+    },
+    {
+      "what": "Used 13 vehicles covering all 8 specified makes with type distribution 4 Sedan / 3 Truck / 4 SUV / 2 Coupe",
+      "why": "13 is within the required 12-15 range and was the minimum needed to include all 8 makes (Toyota, Honda, Ford, Chevrolet, BMW, Mercedes-Benz, Nissan, Mazda)"
+    },
+    {
+      "what": "Included fuelType Hybrid for the 2023 Toyota RAV4",
+      "why": "Spec requires fuelType variety including Hybrid; all other vehicles use Gasoline which is realistic for the inventory mix"
+    },
+    {
+      "what": "Inserted Managing Vehicle Inventory section after Folder Structure in README and retained existing Content Management section",
+      "why": "Spec placement is explicitly after Folder Structure; existing Content Management section was preserved to avoid removing prior documentation"
     }
   ],
   "tools_used": [
     "Read",
     "Write",
     "Edit",
-    "TodoWrite",
     "Bash"
   ]
 }
