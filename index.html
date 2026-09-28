@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Auto Sales | Quality Pre-Owned Vehicles</title>
+  <meta name="description" content="Premium Auto Sales offers quality pre-owned vehicles. Browse our inventory of certified used cars, trucks, and SUVs with competitive pricing and financing options.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Premium Auto Sales | Quality Pre-Owned Vehicles">
+  <meta property="og:description" content="Find your perfect pre-owned vehicle at Premium Auto Sales. Certified used cars, trucks, and SUVs with competitive pricing.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1200&q=80">
+  <meta property="og:url" content="https://premiumautosales.com/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Preconnect for Unsplash images -->
+  <link rel="preconnect" href="https://images.unsplash.com">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- JSON-LD Structured Data for LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AutoDealer",
+    "name": "Premium Auto Sales",
+    "description": "Quality pre-owned vehicles with competitive pricing and financing options.",
+    "url": "https://premiumautosales.com",
+    "telephone": "+1-555-123-4567",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 Auto Drive",
+      "addressLocality": "Anytown",
+      "addressRegion": "ST",
+      "postalCode": "12345",
+      "addressCountry": "US"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday"],
+        "opens": "10:00",
+        "closes": "16:00"
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- Skip link for accessibility -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Site Header / Navigation -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="Premium Auto Sales - Home">
+        <span class="logo-icon" aria-hidden="true">&#x1F697;</span>
+        <span class="logo-text">Premium Auto Sales</span>
+      </a>
+
+      <button
+        class="hamburger"
+        id="hamburger"
+        aria-expanded="false"
+        aria-controls="main-nav"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="hamburger-bar" aria-hidden="true"></span>
+        <span class="hamburger-bar" aria-hidden="true"></span>
+        <span class="hamburger-bar" aria-hidden="true"></span>
+      </button>
+
+      <nav id="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="/" class="nav-link" aria-current="page">Home</a></li>
+          <li><a href="inventory.html" class="nav-link">Inventory</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero Section -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-content">
+        <h1 id="hero-heading">Premium Auto Sales</h1>
+        <p class="hero-tagline">Quality Pre-Owned Vehicles</p>
+        <p class="hero-subtext">Find your perfect vehicle from our carefully curated selection of pre-owned cars, trucks, and SUVs.</p>
+        <a href="#vehicles" class="btn btn-primary">Browse Our Inventory</a>
+      </div>
+    </section>
+
+    <!-- Featured Vehicles Section -->
+    <section id="vehicles" class="section vehicles-section" aria-labelledby="vehicles-heading">
+      <div class="container">
+        <h2 id="vehicles-heading">Featured Vehicles</h2>
+        <p class="section-subtitle">Explore our handpicked selection of quality pre-owned vehicles</p>
+
+        <div class="vehicles-grid">
+          <!-- Vehicle Card 1 -->
+          <article class="vehicle-card">
+            <div class="vehicle-card-image">
+              <img
+                src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600&q=80"
+                alt="2020 Honda Accord sedan in silver"
+                width="600"
+                height="400"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+            <div class="vehicle-card-content">
+              <h3 class="vehicle-title">2020 Honda Accord</h3>
+              <p class="vehicle-details">Sedan &bull; 32,000 mi &bull; Silver</p>
+              <p class="vehicle-price">$22,995</p>
+              <a href="inventory.html" class="btn btn-secondary">View Details</a>
+            </div>
+          </article>
+
+          <!-- Vehicle Card 2 -->
+          <article class="vehicle-card">
+            <div class="vehicle-card-image">
+              <img
+                src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=600&q=80"
+                alt="2019 BMW 3 Series sport sedan in black"
+                width="600"
+                height="400"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+            <div class="vehicle-card-content">
+              <h3 class="vehicle-title">2019 BMW 3 Series</h3>
+              <p class="vehicle-details">Sport Sedan &bull; 28,500 mi &bull; Black</p>
+              <p class="vehicle-price">$31,495</p>
+              <a href="inventory.html" class="btn btn-secondary">View Details</a>
+            </div>
+          </article>
+
+          <!-- Vehicle Card 3 -->
+          <article class="vehicle-card">
+            <div class="vehicle-card-image">
+              <img
+                src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=600&q=80"
+                alt="2021 Toyota RAV4 SUV in blue"
+                width="600"
+                height="400"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+            <div class="vehicle-card-content">
+              <h3 class="vehicle-title">2021 Toyota RAV4</h3>
+              <p class="vehicle-details">SUV &bull; 18,200 mi &bull; Blue</p>
+              <p class="vehicle-price">$28,750</p>
+              <a href="inventory.html" class="btn btn-secondary">View Details</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="vehicles-cta">
+          <a href="inventory.html" class="btn btn-primary">View All Vehicles</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about-section" aria-labelledby="about-heading">
+      <div class="container">
+        <div class="about-content">
+          <div class="about-text">
+            <h2 id="about-heading">About Premium Auto Sales</h2>
+            <p>With over 20 years of experience in the automotive industry, Premium Auto Sales has been serving our community with integrity and dedication. We hand-select every vehicle in our inventory to ensure quality, reliability, and value.</p>
+            <p>Our certified pre-owned vehicles undergo a rigorous multi-point inspection process, giving you confidence and peace of mind with every purchase. We are committed to making your car-buying experience straightforward and enjoyable.</p>
+          </div>
+
+          <div class="trust-badges">
+            <div class="trust-badge">
+              <span class="trust-badge-icon" aria-hidden="true">&#x1F3C6;</span>
+              <h3 class="trust-badge-title">20+ Years</h3>
+              <p class="trust-badge-desc">In Business</p>
+            </div>
+            <div class="trust-badge">
+              <span class="trust-badge-icon" aria-hidden="true">&#x2B50;</span>
+              <h3 class="trust-badge-title">4.9/5 Stars</h3>
+              <p class="trust-badge-desc">Customer Rating</p>
+            </div>
+            <div class="trust-badge">
+              <span class="trust-badge-icon" aria-hidden="true">&#x1F527;</span>
+              <h3 class="trust-badge-title">150-Point</h3>
+              <p class="trust-badge-desc">Inspection</p>
+            </div>
+            <div class="trust-badge">
+              <span class="trust-badge-icon" aria-hidden="true">&#x1F4CB;</span>
+              <h3 class="trust-badge-title">Carfax</h3>
+              <p class="trust-badge-desc">Reports Included</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section" aria-labelledby="cta-heading">
+      <div class="container">
+        <h2 id="cta-heading">Ready to Find Your Dream Car?</h2>
+        <p>Browse our full inventory or get in touch with our friendly team today.</p>
+        <div class="cta-buttons">
+          <a href="inventory.html" class="btn btn-primary">View All Vehicles</a>
+          <a href="contact.html" class="btn btn-secondary btn-outline">Contact Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-col footer-brand">
+        <a href="/" class="footer-logo" aria-label="Premium Auto Sales - Home">Premium Auto Sales</a>
+        <p class="footer-tagline">Quality Pre-Owned Vehicles</p>
+        <div class="social-links" aria-label="Social media links">
+          <a href="#" class="social-link" aria-label="Follow us on Facebook" rel="noopener noreferrer">
+            <span aria-hidden="true">f</span>
+          </a>
+          <a href="#" class="social-link" aria-label="Follow us on Instagram" rel="noopener noreferrer">
+            <span aria-hidden="true">&#x1F4F7;</span>
+          </a>
+          <a href="#" class="social-link" aria-label="Follow us on Twitter" rel="noopener noreferrer">
+            <span aria-hidden="true">t</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col footer-hours">
+        <h3 class="footer-heading">Business Hours</h3>
+        <ul class="hours-list">
+          <li><span>Mon&ndash;Fri:</span> <time>9:00 AM &ndash; 6:00 PM</time></li>
+          <li><span>Saturday:</span> <time>10:00 AM &ndash; 4:00 PM</time></li>
+          <li><span>Sunday:</span> <time>Closed</time></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-links">
+        <h3 class="footer-heading">Quick Links</h3>
+        <nav aria-label="Footer navigation">
+          <ul class="footer-nav-list">
+            <li><a href="/">Home</a></li>
+            <li><a href="inventory.html">Inventory</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; <time datetime="2024">2024</time> Premium Auto Sales. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <!-- Main JavaScript (deferred for non-blocking load) -->
+  <script src="js/main.js" defer></script>
+</body>
+</html>
