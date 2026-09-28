@@ -1,6 +1,14 @@
 {
-  "files_created": [".gitignore"],
-  "files_modified": ["README.md"],
+  "files_created": [
+    ".gitignore",
+    "index.html",
+    "css/styles.css",
+    "js/main.js"
+  ],
+  "files_modified": [
+    "README.md",
+    "index.html"
+  ],
   "decisions": [
     {
       "what": "Preserved existing arvad_task_files/ ignore entry in .gitignore",
@@ -8,8 +16,42 @@
     },
     {
       "what": "Wrote comprehensive README.md replacing the truncated original",
-      "why": "The existing README was a single incomplete sentence. The spec required a full replacement with all specified sections: Project Overview, Local Development Setup, Folder Structure, Content Management, Deployment, Performance Best Practices, Accessibility Guidelines, Browser Compatibility, and Contributing Guidelines."
+      "why": "The existing README was a single incomplete sentence. The spec required a full replacement with all specified sections."
+    },
+    {
+      "what": "Created index.html HTML structure first, then added CSS/JS links as a separate edit",
+      "why": "Spec 001 defined the HTML structure; spec 004 explicitly adds the <link> and <script> tags as a distinct modification step"
+    },
+    {
+      "what": "Used Unsplash image URLs for hero background and vehicle card images",
+      "why": "Spec required Unsplash URLs with proper alt text; no local images exist in the project"
+    },
+    {
+      "what": "Implemented IIFE pattern with 'use strict' in js/main.js",
+      "why": "Spec explicitly required IIFE pattern to avoid global scope pollution and strict mode"
+    },
+    {
+      "what": "Added defer attribute to the script tag in index.html",
+      "why": "Spec required defer for non-blocking load"
+    },
+    {
+      "what": "Used IntersectionObserver for active nav highlighting",
+      "why": "More performant than a raw scroll event listener; debounced scroll handler still used for sticky header shadow"
+    },
+    {
+      "what": "CSS custom properties match spec exactly: --primary-color #1a73e8, --secondary-color #34a853, --text-dark #202124, --text-light #5f6368, --bg-light #f8f9fa, --spacing-unit 8px",
+      "why": "Spec specified exact variable names and values"
+    },
+    {
+      "what": "Mobile-first CSS with breakpoints at 640px, 768px, 1024px",
+      "why": "Spec required mobile-first media queries; 640px added for 2-col vehicle grid on small tablets, 768px for desktop nav, 1024px for 3-col grid and side-by-side about layout"
     }
   ],
-  "tools_used": ["Read", "Write"]
+  "tools_used": [
+    "Read",
+    "Write",
+    "Edit",
+    "TodoWrite",
+    "Bash"
+  ]
 }
