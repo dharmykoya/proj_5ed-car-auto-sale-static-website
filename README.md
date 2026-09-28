@@ -382,6 +382,173 @@ For EmailJS, you can integrate reCAPTCHA manually by loading the reCAPTCHA scrip
 
 ---
 
+
+---
+
+## Performance Optimizations
+
+This project ships with several performance optimizations to ensure fast load times, especially for users on mobile devices or slower connections.
+
+---
+
+### Lazy Loading
+
+**Native lazy loading** is applied to all below-the-fold images using the HTML `loading="lazy"` attribute:
+
+```html
+<img src="vehicle.jpg" alt="2022 Toyota Camry" loading="lazy" decoding="async">
+```
+
+**Benefits:**
+- Images outside the viewport are not downloaded until the user scrolls near them.
+- Reduces initial page weight significantly on inventory and detail pages.
+- Particularly impactful on mobile where data is more constrained.
+
+**Intersection Observer fallback:**
+`js/main.js` includes `initLazyLoading()`, which provides a JavaScript fallback for browsers that do not support native `loading="lazy"`. The fallback uses `IntersectionObserver` to watch `img[data-src]` elements and swaps the `data-src` to `src` when the image enters the viewport. A `loaded` CSS class is added after each image loads to trigger a fade-in animation.
+
+```javascript
+// Simplified fallback logic in js/main.js
+if (!('loading' in HTMLImageElement.prototype)) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.classList.add('loaded');
+        observer.unobserve(img);
+      }
+    });
+  }, { rootMargin: '200px 0px' });
+  document.querySelectorAll('img[data-src]').forEach(img => observer.observe(img));
+}
+```
+
+---
+
+### CSS/JavaScript Minification
+
+Production HTML files reference `.min.css` and `.min.js` files to reduce parse and transfer time.
+
+| Source file | Minified file | Used in |
+|---|---|---|
+| `css/styles.css` | `css/styles.min.css` | All pages |
+| `js/main.js` | `js/main.min.js` | All pages |
+| `js/inventory.js` | `js/inventory.min.js` | `inventory.html` |
+| `js/vehicle-detail.js` | `js/vehicle-detail.min.js` | `vehicle-detail.html` |
+| `js/contact.js` | `js/contact.min.js` | `contact.html` |
+
+**How minified files are generated:**
+
+The minification process removes comments, collapses whitespace, and shortens identifiers. You can use any of the following tools:
+
+- **Online:** [CSS Minifier](https://cssminifier.com), [JS Minifier](https://javascript-minifier.com)
+- **npm scripts:** Install `clean-css-cli` and `terser`, then run:
+  ```bash
+  npx clean-css-cli -o css/styles.min.css css/styles.css
+  npx terser js/main.js -o js/main.min.js --compress --mangle
+  ```
+- **Build tools:** Webpack, Vite, Parcel, or Rollup with minification plugins
+
+> **Important:** Always edit the **source** `.css` / `.js` files. Never edit the `.min.*` files directly — your changes will be overwritten the next time you minify.
+
+---
+
+### Image Optimization
+
+This site uses [Unsplash](https://unsplash.com) for vehicle photography. Unsplash supports URL-based image transformations:
+
+| Parameter | Purpose | Example |
+|---|---|---|
+| `w` | Width in pixels | `?w=800` |
+| `h` | Height in pixels | `?h=600` |
+| `q` | JPEG quality (1–100) | `?q=80` |
+| `fm` | Output format | `?fm=webp` |
+| `fit` | Crop mode | `?fit=crop` |
+
+**Recommended URL pattern:**
+
+```
+https://images.unsplash.com/photo-XXXXXXXXXXXXXXXXXX?w=800&h=600&fit=crop&q=80&fm=webp
+```
+
+Using `fm=webp` delivers WebP images to browsers that support it, reducing file size by 25–35% versus JPEG.
+
+**Optimizing local images (if added in future):**
+
+If you add your own vehicle photos to the `images/` folder, compress them before uploading:
+
+- **[TinyPNG](https://tinypng.com)** — drag-and-drop PNG/JPEG compression (free, up to 20 files)
+- **[ImageOptim](https://imageoptim.com)** — macOS desktop app for lossless compression
+- **[Squoosh](https://squoosh.app)** — browser-based tool with WebP export
+- **Command line:** `npx sharp-cli --input images/*.jpg --output images/ --quality 80`
+
+Target file sizes: thumbnails < 50 KB, gallery images < 150 KB.
+
+---
+
+### Maintaining Optimizations
+
+When you make changes to CSS or JavaScript source files, follow these steps to keep the minified files in sync:
+
+1. **Edit the original source file** — `css/styles.css` or `js/main.js` (never the `.min.*` files).
+2. **Re-minify** using an online tool or npm script:
+   ```bash
+   npx clean-css-cli -o css/styles.min.css css/styles.css
+   npx terser js/main.js -o js/main.min.js --compress --mangle
+   ```
+3. **Test the minified version** — open the site in your browser and verify all styles and interactions work correctly.
+4. **Commit both files** — always commit the source file and its minified counterpart together so they stay in sync in version control.
+
+> **Tip:** Consider adding a `package.json` with a `build` script that minifies all files in one command:
+> ```json
+> {
+>   "scripts": {
+>     "build": "clean-css-cli -o css/styles.min.css css/styles.css && terser js/main.js -o js/main.min.js --compress --mangle"
+>   }
+> }
+> ```
+
+---
+
+### Performance Testing
+
+Use **Lighthouse** in Chrome DevTools to audit the site:
+
+1. Open Chrome and navigate to the page you want to audit.
+2. Open DevTools (`F12` / `Cmd+Option+I`).
+3. Click the **Lighthouse** tab.
+4. Select **Mobile** (more representative of real users) and tick **Performance**, **Accessibility**, **Best Practices**, and **SEO**.
+5. Click **Analyze page load**.
+
+**Target Lighthouse scores for this project:**
+
+| Category | Target |
+|---|---|
+| Performance | > 90 |
+| Accessibility | > 95 |
+| Best Practices | > 90 |
+| SEO | > 90 |
+
+If your score falls below target, check the **Opportunities** and **Diagnostics** sections in the report for specific recommendations.
+
+---
+
+### Performance Budget
+
+The following Core Web Vitals targets should be met on a mid-range mobile device on a 4G connection:
+
+| Metric | Description | Target |
+|---|---|---|
+| **FCP** | First Contentful Paint — time until first content appears | < 1.5 s |
+| **LCP** | Largest Contentful Paint — time until largest element is visible | < 2.5 s |
+| **TBT** | Total Blocking Time — CPU time blocked by long tasks | < 200 ms |
+| **CLS** | Cumulative Layout Shift — visual stability score | < 0.1 |
+
+> **Note:** Always specify explicit `width` and `height` attributes on `<img>` elements. This allows the browser to reserve space before images load, preventing layout shifts that increase CLS.
+
+---
+
 ## Deployment
 
 ### GitHub Pages
