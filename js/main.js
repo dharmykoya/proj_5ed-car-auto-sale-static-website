@@ -185,46 +185,90 @@
      ============================================ */
 
   /**
-   * Polyfill for browsers without native `loading="lazy"` support.
-   * Uses IntersectionObserver to load images with a `data-src` attribute
-   * when they enter the viewport. Falls back to eager loading if
-   * IntersectionObserver is also unavailable.
+   * Initialises lazy loading for images.
+   *
+   * Strategy:
+   * 1. If the browser natively supports loading='lazy', attach a load
+   *    event listener to each lazy image so it receives the 'loaded'
+   *    CSS class for the fade-in animation once it finishes loading.
+   * 2. If native lazy loading is NOT supported, fall back to an
+   *    IntersectionObserver that swaps data-src → src when an image
+   *    enters the viewport, then adds the 'loaded' class.
+   * 3. If IntersectionObserver is also unavailable, load all deferred
+   *    images immediately (last-resort eager loading).
+   *
+   * The 'loaded' class is used by CSS to trigger a fade-in transition,
+   * improving perceived performance across all browsers.
    */
-  function initLazyLoadingFallback() {
+  function initLazyLoading() {
     try {
-      /* Native lazy loading is supported — nothing to do */
-      if ('loading' in HTMLImageElement.prototype) return;
-
-      var lazyImages = document.querySelectorAll('img[data-src]');
-      if (lazyImages.length === 0) return;
-
-      /* IntersectionObserver not available — load all immediately */
-      if (!('IntersectionObserver' in window)) {
-        Array.prototype.forEach.call(lazyImages, function (img) {
-          if (img.dataset.src) {
-            img.src = img.dataset.src;
+      /* --- Path 1: native lazy loading is available --- */
+      if ('loading' in HTMLImageElement.prototype) {
+        /*
+         * Native loading='lazy' handles deferral automatically.
+         * We only need to add the 'loaded' class once each image
+         * has finished decoding so the CSS fade-in can fire.
+         */
+        var nativeLazyImages = document.querySelectorAll('img[loading="lazy"]');
+        Array.prototype.forEach.call(nativeLazyImages, function (img) {
+          if (img.complete) {
+            /* Already in cache — apply class immediately */
+            img.classList.add('loaded');
+          } else {
+            img.addEventListener('load', function () {
+              img.classList.add('loaded');
+            });
           }
         });
         return;
       }
 
-      var observer = new IntersectionObserver(
-        function (entries, obs) {
-          Array.prototype.forEach.call(entries, function (entry) {
-            if (!entry.isIntersecting) return;
-            var img = entry.target;
-            if (img.dataset.src) {
-              img.src = img.dataset.src;
-              img.removeAttribute('data-src');
-            }
-            obs.unobserve(img);
-          });
-        },
-        { rootMargin: '200px 0px' }
-      );
+      /* --- Path 2: IntersectionObserver fallback --- */
+      /*
+       * Browsers that lack native lazy loading but do support
+       * IntersectionObserver (e.g. older Chrome, Firefox).
+       * Images must carry a data-src attribute; their src is set
+       * to a transparent placeholder until they enter the viewport.
+       */
+      var lazyImages = document.querySelectorAll('img[data-src]');
+      if (lazyImages.length === 0) return;
 
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(
+          function (entries, obs) {
+            Array.prototype.forEach.call(entries, function (entry) {
+              if (!entry.isIntersecting) return;
+              var img = entry.target;
+              if (img.dataset.src) {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                /* Add 'loaded' class for fade-in after the image loads */
+                img.addEventListener('load', function () {
+                  img.classList.add('loaded');
+                });
+              }
+              obs.unobserve(img);
+            });
+          },
+          { rootMargin: '200px 0px' }
+        );
+
+        Array.prototype.forEach.call(lazyImages, function (img) {
+          observer.observe(img);
+        });
+        return;
+      }
+
+      /* --- Path 3: eager fallback (no IntersectionObserver) --- */
+      /*
+       * Last resort for very old browsers: load all images immediately
+       * so the page content is not broken.
+       */
       Array.prototype.forEach.call(lazyImages, function (img) {
-        observer.observe(img);
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+        }
       });
     } catch (err) {
       console.error('[LazyLoad] Initialization failed:', err);
@@ -320,7 +364,7 @@
   function init() {
     initMobileMenu();
     initSmoothScroll();
-    initLazyLoadingFallback();
+    initLazyLoading();
     initActiveNavHighlighting();
     initStickyHeader();
   }
