@@ -1,0 +1,15 @@
+{
+  "files_created": [".gitignore"],
+  "files_modified": ["README.md"],
+  "decisions": [
+    {
+      "what": "Preserved existing arvad_task_files/ ignore entry in .gitignore",
+      "why": "The .gitignore already contained a line ignoring arvad_task_files/; this entry was retained and the new OS/IDE/log/build patterns were appended below it to avoid losing existing configuration."
+    },
+    {
+      "what": "Wrote comprehensive README.md replacing the truncated original",
+      "why": "The existing README was a single incomplete sentence. The spec required a full replacement with all specified sections: Project Overview, Local Development Setup, Folder Structure, Content Management, Deployment, Performance Best Practices, Accessibility Guidelines, Browser Compatibility, and Contributing Guidelines."
+    }
+  ],
+  "tools_used": ["Read", "Write"]
+}
