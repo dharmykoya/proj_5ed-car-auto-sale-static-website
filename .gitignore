@@ -1,0 +1,37 @@
+# Claude CLI task files
+arvad_task_files/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# IDE configurations
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary files
+*.tmp
+.cache/
+
+# Build artifacts
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
