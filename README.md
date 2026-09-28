@@ -270,6 +270,118 @@ Delete the entire entry (from the opening `{` to the closing `}`) and ensure the
 
 ---
 
+## Contact Form Setup
+
+The contact page (`contact.html`) supports two methods for processing form submissions without a backend server. Choose the option that best suits your needs.
+
+---
+
+### Option 1: FormSpree (Recommended for Beginners)
+
+FormSpree is the simplest way to add form handling — no code changes beyond updating one attribute.
+
+1. **Sign up** at [formspree.io](https://formspree.io) and create a free account.
+2. Click **+ New Form** and give your form a name (e.g., "Premium Auto Sales Contact").
+3. **Copy the form endpoint URL** shown after creation. It will look like:
+   ```
+   https://formspree.io/f/abcdefgh
+   ```
+4. **Update `contact.html`** — find the `<form>` element and replace the placeholder in the `action` attribute:
+   ```html
+   <!-- Before -->
+   <form action="https://formspree.io/f/your-form-id" method="POST" ...>
+
+   <!-- After -->
+   <form action="https://formspree.io/f/abcdefgh" method="POST" ...>
+   ```
+5. **Test the form** by submitting it on your live site or by opening `contact.html` via a local server (e.g., `npx serve .`). FormSpree requires an HTTP/HTTPS origin; file:// URLs will not work.
+6. **Configure email notifications** in your FormSpree dashboard under **Settings → Notifications** to choose which address receives submissions.
+
+> **Note:** The free plan allows up to 50 submissions per month. Upgrade for higher volume.
+
+---
+
+### Option 2: EmailJS (More Customization)
+
+EmailJS lets you send emails directly from JavaScript using your own email provider (Gmail, Outlook, etc.) without a backend.
+
+1. **Sign up** at [emailjs.com](https://www.emailjs.com) and create a free account.
+2. **Create an Email Service** — go to **Email Services**, click **Add New Service**, and connect your Gmail, Outlook, or other provider. Note the **Service ID** (e.g., `service_abc123`).
+3. **Create an Email Template** — go to **Email Templates**, click **Create New Template**, and design your notification email using template variables such as `{{name}}`, `{{email}}`, `{{message}}`. Note the **Template ID** (e.g., `template_xyz789`).
+4. **Get your Public Key** — go to **Account → API Keys** and copy your **Public Key**.
+5. **Update `contact.html`** — add the EmailJS SDK before the closing `</body>` tag (before `js/contact.js`):
+   ```html
+   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+   <script src="js/contact.js" defer></script>
+   ```
+6. **Update `js/contact.js`** — initialize EmailJS and replace the fetch call in `handleFormSubmit` with `emailjs.send()`:
+   ```javascript
+   // Initialize at the top of contact.js (or in DOMContentLoaded)
+   emailjs.init('YOUR_PUBLIC_KEY');
+
+   // Replace the fetch() call in handleFormSubmit with:
+   await emailjs.send('service_abc123', 'template_xyz789', {
+     name: form.querySelector('#name').value,
+     email: form.querySelector('#email').value,
+     phone: form.querySelector('#phone').value,
+     subject: form.querySelector('#subject').value,
+     vehicle_interest: form.querySelector('#vehicle-interest').value,
+     message: form.querySelector('#message').value,
+   });
+   ```
+7. **Test the form** submission and verify you receive the email in your inbox.
+
+> **Note:** The free plan allows up to 200 emails per month.
+
+---
+
+### Testing the Contact Form
+
+**Local testing:**
+- Because FormSpree and EmailJS require an HTTP/HTTPS origin, you cannot test by simply opening `contact.html` as a file (`file://`).
+- Use a local server instead:
+  ```bash
+  # Using Node.js / npx
+  npx serve .
+
+  # Using Python 3
+  python3 -m http.server 8080
+  ```
+  Then open `http://localhost:8080/contact.html` in your browser.
+
+**Checking email delivery:**
+- After submitting a test message, check your inbox (and spam folder) for the notification email.
+- FormSpree: also check the **Submissions** tab in your FormSpree dashboard to confirm the submission was received.
+- EmailJS: check the **Email History** section in your EmailJS dashboard.
+
+**Troubleshooting common issues:**
+
+| Issue | Likely Cause | Fix |
+|-------|-------------|-----|
+| Form submits but no email arrives | Incorrect form ID / Service ID | Double-check the IDs copied from the dashboard |
+| "Failed to send" error message | Network error or invalid endpoint | Verify the `action` URL or EmailJS credentials; check browser console for details |
+| Submissions going to spam | Email provider filtering | Add the sending address to your contacts; check EmailJS DKIM settings |
+| Form validation not triggering | JavaScript not loaded | Ensure `<script src="js/contact.js" defer></script>` is present before `</body>` |
+
+---
+
+### Spam Protection
+
+**Honeypot field (built-in):**
+The contact form includes a hidden honeypot input (`name="_gotcha"`). Human users never see or fill this field, but automated bots typically do. If the field is filled on submission, the `js/contact.js` script silently rejects the submission before it reaches the form service.
+
+```html
+<!-- Hidden from users; bots fill it automatically -->
+<input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+```
+
+**Optional reCAPTCHA (FormSpree premium plans):**
+FormSpree's paid plans support Google reCAPTCHA v2/v3 integration directly in the dashboard under **Settings → Spam Filter**. No code changes are needed — enable it in the dashboard and FormSpree handles verification server-side.
+
+For EmailJS, you can integrate reCAPTCHA manually by loading the reCAPTCHA script, verifying the token client-side, and passing it as a template variable. Refer to the [EmailJS documentation](https://www.emailjs.com/docs/) for details.
+
+---
+
 ## Deployment
 
 ### GitHub Pages
