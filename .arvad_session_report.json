@@ -8,14 +8,17 @@
     "js/inventory.js",
     "data/vehicles.json",
     "vehicle-detail.html",
-    "js/vehicle-detail.js"
+    "js/vehicle-detail.js",
+    "contact.html",
+    "js/contact.js"
   ],
   "files_modified": [
     "README.md",
     "index.html",
     "css/styles.css",
     "inventory.html",
-    "vehicle-detail.html"
+    "vehicle-detail.html",
+    "contact.html"
   ],
   "decisions": [
     {
@@ -113,6 +116,26 @@
     {
       "what": "CSS vehicle detail styles appended to end of existing styles.css",
       "why": "Spec says to extend the existing stylesheet; appending preserves existing rules and follows the established section-comment pattern"
+    },
+    {
+      "what": "Used FormSpree (fetch + form action) for contact form submission instead of EmailJS",
+      "why": "FormSpree requires no additional SDK; simpler integration for static site; EmailJS setup documented in README for users who prefer it"
+    },
+    {
+      "what": "contact.html created in task 1 with both CSS link and JS script tags already included; task 4 rewrote file with ARVAD comments confirming their presence",
+      "why": "Task 1 spec described the complete page including all assets; task 4 spec is a verification/modification step that overlaps with task 1 output"
+    },
+    {
+      "what": "Contact page uses two-column grid layout (aside for business info, section for form)",
+      "why": "Spec required 40/60 desktop two-column layout stacked on mobile; aside/section semantics match content roles"
+    },
+    {
+      "what": "Contact form JS uses 'use strict' module-style pattern with top-level functions and a single DOMContentLoaded initializer",
+      "why": "Matches the existing codebase pattern from js/main.js and js/vehicle-detail.js; no bundler available so ES module syntax not appropriate"
+    },
+    {
+      "what": "README Contact Form Setup section placed before Deployment section",
+      "why": "Spec said after 'Managing Vehicle Inventory'; Deployment is the next major section after inventory content, making it the natural insertion point"
     }
   ],
   "tools_used": [
