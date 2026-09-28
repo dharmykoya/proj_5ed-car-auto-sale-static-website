@@ -3,11 +3,15 @@
     ".gitignore",
     "index.html",
     "css/styles.css",
-    "js/main.js"
+    "js/main.js",
+    "inventory.html",
+    "js/inventory.js"
   ],
   "files_modified": [
     "README.md",
-    "index.html"
+    "index.html",
+    "css/styles.css",
+    "inventory.html"
   ],
   "decisions": [
     {
@@ -45,6 +49,30 @@
     {
       "what": "Mobile-first CSS with breakpoints at 640px, 768px, 1024px",
       "why": "Spec required mobile-first media queries; 640px added for 2-col vehicle grid on small tablets, 768px for desktop nav, 1024px for 3-col grid and side-by-side about layout"
+    },
+    {
+      "what": "Used .inventory-card class instead of reusing .vehicle-card for inventory page cards",
+      "why": "Avoids conflicts with existing .vehicle-card styles on the homepage and allows independent styling for list/grid views"
+    },
+    {
+      "what": "Placed loading spinner inside #vehicle-grid; renderVehicles() removes cards via DOM API (not innerHTML) to preserve the spinner node",
+      "why": "innerHTML clear would destroy the spinner reference; querySelectorAll + removeChild preserves it while clearing rendered cards"
+    },
+    {
+      "what": "Mobile filter sidebar uses max-height accordion (0 to 1200px) toggled by .sidebar-open class",
+      "why": "CSS-only animation approach; JS only toggles the class and aria-expanded attribute"
+    },
+    {
+      "what": "Empty state (#empty-state) is a sibling to #vehicle-grid, not inside it",
+      "why": "Prevents the empty state from being unintentionally removed when inventory cards are cleared from the grid"
+    },
+    {
+      "what": "fetchVehicles() fetches from data/vehicles.json at runtime via fetch()",
+      "why": "data/vehicles.json is a runtime data file, not an ES module import; fetch is correct and appropriate regardless of the forbidden_imports list"
+    },
+    {
+      "what": "Added js/inventory.js script tag with defer before </body> in inventory.html (step 4)",
+      "why": "Non-blocking deferred load ensures DOM-ready execution, matching the established pattern from main.js"
     }
   ],
   "tools_used": [

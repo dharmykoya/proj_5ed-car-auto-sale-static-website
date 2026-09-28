@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Inventory | Premium Auto Sales</title>
+  <meta name="description" content="Browse our full inventory of quality used cars for sale. Filter by price, year, and vehicle type to find your perfect pre-owned vehicle today.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Vehicle Inventory | Premium Auto Sales">
+  <meta property="og:description" content="Browse used cars for sale at Premium Auto Sales. Filter and sort our full inventory to find your perfect pre-owned vehicle.">
+  <meta property="og:type" content="website">
+
+  <!-- Preconnect for Unsplash images -->
+  <link rel="preconnect" href="https://images.unsplash.com">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Skip link for accessibility -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Site Header / Navigation -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="Premium Auto Sales - Home">
+        <span class="logo-icon" aria-hidden="true">&#x1F697;</span>
+        <span class="logo-text">Premium Auto Sales</span>
+      </a>
+
+      <button
+        class="hamburger"
+        id="hamburger"
+        aria-expanded="false"
+        aria-controls="main-nav"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="hamburger-bar" aria-hidden="true"></span>
+        <span class="hamburger-bar" aria-hidden="true"></span>
+        <span class="hamburger-bar" aria-hidden="true"></span>
+      </button>
+
+      <nav id="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="inventory.html" class="nav-link" aria-current="page">Inventory</a></li>
+          <li><a href="/#about" class="nav-link">About</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="inventory-page container">
+
+      <h1 class="inventory-title">Vehicle Inventory</h1>
+
+      <!-- Mobile filter toggle -->
+      <button
+        class="filter-toggle-btn"
+        id="filter-toggle"
+        aria-expanded="false"
+        aria-controls="filter-sidebar"
+        aria-label="Toggle filter panel"
+      >
+        <span>Filter Vehicles</span>
+        <span class="filter-toggle-icon" aria-hidden="true">&#x25BC;</span>
+      </button>
+
+      <div class="inventory-layout">
+
+        <!-- Filter Sidebar -->
+        <aside class="filter-sidebar" id="filter-sidebar" aria-label="Filter vehicles">
+          <h2 class="filter-heading">Filter Vehicles</h2>
+
+          <form class="filter-form" id="filter-form" novalidate>
+
+            <!-- Price Range -->
+            <fieldset class="filter-group">
+              <legend class="filter-group-label">Price Range</legend>
+              <div class="price-range-inputs">
+                <div class="field">
+                  <label for="price-min">Min Price ($)</label>
+                  <input
+                    type="number"
+                    id="price-min"
+                    name="price_min"
+                    class="filter-input"
+                    min="0"
+                    step="500"
+                    placeholder="No min"
+                    aria-label="Minimum price in dollars"
+                  >
+                </div>
+                <div class="field">
+                  <label for="price-max">Max Price ($)</label>
+                  <input
+                    type="number"
+                    id="price-max"
+                    name="price_max"
+                    class="filter-input"
+                    min="0"
+                    step="500"
+                    placeholder="No max"
+                    aria-label="Maximum price in dollars"
+                  >
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Year Filter -->
+            <fieldset class="filter-group">
+              <legend class="filter-group-label">Year</legend>
+              <div class="field">
+                <label for="filter-year" class="sr-only">Filter by year</label>
+                <select
+                  id="filter-year"
+                  name="year"
+                  class="filter-select"
+                  aria-label="Filter by vehicle year"
+                >
+                  <option value="">All Years</option>
+                  <option value="2024">2024</option>
+                  <option value="2023">2023</option>
+                  <option value="2022">2022</option>
+                  <option value="2021">2021</option>
+                  <option value="2020">2020</option>
+                  <option value="2019">2019</option>
+                  <option value="2018">2018</option>
+                  <option value="2017">2017</option>
+                  <option value="2016">2016</option>
+                  <option value="2015">2015</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <!-- Vehicle Type -->
+            <fieldset class="filter-group">
+              <legend class="filter-group-label">Vehicle Type</legend>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" name="types" value="Sedan" class="filter-checkbox">
+                  <span>Sedan</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="types" value="SUV" class="filter-checkbox">
+                  <span>SUV</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="types" value="Truck" class="filter-checkbox">
+                  <span>Truck</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="types" value="Coupe" class="filter-checkbox">
+                  <span>Coupe</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="types" value="Van" class="filter-checkbox">
+                  <span>Van</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- Filter Actions -->
+            <div class="filter-actions">
+              <button type="button" class="btn btn-primary" id="apply-filters">Apply Filters</button>
+              <button type="button" class="btn btn-filter-clear" id="clear-filters">Clear Filters</button>
+            </div>
+
+          </form>
+        </aside>
+
+        <!-- Content Area -->
+        <section class="inventory-content" aria-labelledby="inventory-results-label">
+          <h2 id="inventory-results-label" class="sr-only">Vehicle Results</h2>
+
+          <!-- Toolbar -->
+          <div class="inventory-toolbar" role="toolbar" aria-label="Inventory display options">
+            <p
+              class="results-counter"
+              id="results-counter"
+              aria-live="polite"
+              role="status"
+            >
+              Showing 0 of 0 vehicles
+            </p>
+
+            <div class="toolbar-controls">
+              <!-- Sort Dropdown -->
+              <div class="sort-control">
+                <label for="sort-select" class="sr-only">Sort vehicles by</label>
+                <select
+                  id="sort-select"
+                  class="filter-select sort-select"
+                  aria-label="Sort vehicles"
+                >
+                  <option value="price-asc">Price: Low to High</option>
+                  <option value="price-desc">Price: High to Low</option>
+                  <option value="year-desc">Year: Newest First</option>
+                  <option value="year-asc">Year: Oldest First</option>
+                  <option value="mileage-asc">Mileage: Low to High</option>
+                </select>
+              </div>
+
+              <!-- View Toggle -->
+              <div class="view-toggle" role="group" aria-label="View style">
+                <button
+                  class="view-btn view-btn-grid active"
+                  id="btn-grid-view"
+                  aria-label="Grid view"
+                  aria-pressed="true"
+                  title="Grid view"
+                >
+                  <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+                    <rect x="0" y="0" width="7" height="7" rx="1"/>
+                    <rect x="11" y="0" width="7" height="7" rx="1"/>
+                    <rect x="0" y="11" width="7" height="7" rx="1"/>
+                    <rect x="11" y="11" width="7" height="7" rx="1"/>
+                  </svg>
+                </button>
+                <button
+                  class="view-btn view-btn-list"
+                  id="btn-list-view"
+                  aria-label="List view"
+                  aria-pressed="false"
+                  title="List view"
+                >
+                  <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+                    <rect x="0" y="1" width="18" height="3" rx="1"/>
+                    <rect x="0" y="7" width="18" height="3" rx="1"/>
+                    <rect x="0" y="13" width="18" height="3" rx="1"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vehicle Grid -->
+          <div class="vehicle-grid" id="vehicle-grid" aria-live="polite" aria-busy="true">
+            <!-- Loading Spinner (initially visible) -->
+            <div class="loading-spinner" id="loading-spinner" aria-label="Loading vehicles">
+              <div class="spinner" role="status">
+                <span class="sr-only">Loading vehicles...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty State (initially hidden) -->
+          <div class="empty-state" id="empty-state" hidden aria-live="polite">
+            <p class="empty-state-icon" aria-hidden="true">&#x1F697;</p>
+            <p class="empty-state-message">No vehicles match your filters. Try adjusting your criteria.</p>
+            <button type="button" class="btn btn-primary" id="empty-clear-filters">Clear All Filters</button>
+          </div>
+
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-col footer-brand">
+        <a href="/" class="footer-logo" aria-label="Premium Auto Sales - Home">Premium Auto Sales</a>
+        <p class="footer-tagline">Quality Pre-Owned Vehicles</p>
+        <div class="social-links" aria-label="Social media links">
+          <a href="#" class="social-link" aria-label="Follow us on Facebook" rel="noopener noreferrer">
+            <span aria-hidden="true">f</span>
+          </a>
+          <a href="#" class="social-link" aria-label="Follow us on Instagram" rel="noopener noreferrer">
+            <span aria-hidden="true">&#x1F4F7;</span>
+          </a>
+          <a href="#" class="social-link" aria-label="Follow us on Twitter" rel="noopener noreferrer">
+            <span aria-hidden="true">t</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col footer-hours">
+        <h3 class="footer-heading">Business Hours</h3>
+        <ul class="hours-list">
+          <li><span>Mon&ndash;Fri:</span> <time>9:00 AM &ndash; 6:00 PM</time></li>
+          <li><span>Saturday:</span> <time>10:00 AM &ndash; 4:00 PM</time></li>
+          <li><span>Sunday:</span> <time>Closed</time></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-links">
+        <h3 class="footer-heading">Quick Links</h3>
+        <nav aria-label="Footer navigation">
+          <ul class="footer-nav-list">
+            <li><a href="/">Home</a></li>
+            <li><a href="inventory.html">Inventory</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; <time datetime="2024">2024</time> Premium Auto Sales. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript (deferred for non-blocking load) -->
+  <script src="js/main.js" defer></script>
+  <!-- Inventory page JavaScript (deferred for non-blocking load) -->
+  <script src="js/inventory.js" defer></script>
+</body>
+</html>
