@@ -6,13 +6,16 @@
     "js/main.js",
     "inventory.html",
     "js/inventory.js",
-    "data/vehicles.json"
+    "data/vehicles.json",
+    "vehicle-detail.html",
+    "js/vehicle-detail.js"
   ],
   "files_modified": [
     "README.md",
     "index.html",
     "css/styles.css",
-    "inventory.html"
+    "inventory.html",
+    "vehicle-detail.html"
   ],
   "decisions": [
     {
@@ -90,12 +93,33 @@
     {
       "what": "Inserted Managing Vehicle Inventory section after Folder Structure in README and retained existing Content Management section",
       "why": "Spec placement is explicitly after Folder Structure; existing Content Management section was preserved to avoid removing prior documentation"
+    },
+    {
+      "what": "vehicle-detail.html created without vehicle-detail.js script tag in spec 1, then script tag added in spec 4",
+      "why": "Specs applied sequentially: spec 1 creates the base template; spec 4 explicitly modifies the file to add the deferred script tag"
+    },
+    {
+      "what": "Lightbox implemented as a div with role=dialog/aria-modal rather than native <dialog>",
+      "why": "Spec describes a custom overlay div with prev/next/close buttons; role=dialog with aria-modal maintains accessibility while matching the specified layout structure"
+    },
+    {
+      "what": "Vehicle ID regex allows hyphens: /^[a-zA-Z0-9-]{1,20}$/",
+      "why": "All real vehicle IDs in vehicles.json use format 'veh-001'; strictly alphanumeric-only would reject all valid IDs"
+    },
+    {
+      "what": "fetchRelatedVehicles makes a second fetch to vehicles.json rather than reusing already-loaded data",
+      "why": "Spec requires an independent async function; no shared in-memory data store exists on this static site"
+    },
+    {
+      "what": "CSS vehicle detail styles appended to end of existing styles.css",
+      "why": "Spec says to extend the existing stylesheet; appending preserves existing rules and follows the established section-comment pattern"
     }
   ],
   "tools_used": [
     "Read",
     "Write",
     "Edit",
-    "Bash"
+    "Bash",
+    "TodoWrite"
   ]
 }

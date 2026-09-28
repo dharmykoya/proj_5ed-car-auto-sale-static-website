@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Details | Premium Auto Sales</title>
+  <meta name="description" id="meta-description" content="View detailed information, photos, and specifications for this vehicle at Premium Auto Sales.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" id="og-title" content="Vehicle Details | Premium Auto Sales">
+  <meta property="og:description" id="og-description" content="View detailed information, photos, and specifications for this vehicle at Premium Auto Sales.">
+  <meta property="og:image" id="og-image" content="">
+  <meta property="og:url" id="og-url" content="">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Preconnect for Unsplash images -->
+  <link rel="preconnect" href="https://images.unsplash.com">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Skip link for accessibility -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Site Header / Navigation -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="Premium Auto Sales - Home">
+        <span class="logo-icon" aria-hidden="true">&#x1F697;</span>
+        <span class="logo-text">Premium Auto Sales</span>
+      </a>
+
+      <button
+        class="hamburger"
+        id="hamburger"
+        aria-expanded="false"
+        aria-controls="main-nav"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="hamburger-bar" aria-hidden="true"></span>
+        <span class="hamburger-bar" aria-hidden="true"></span>
+        <span class="hamburger-bar" aria-hidden="true"></span>
+      </button>
+
+      <nav id="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="inventory.html" class="nav-link">Inventory</a></li>
+          <li><a href="/#about" class="nav-link">About</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Loading Spinner (initially visible, hidden when data loads) -->
+    <div class="vehicle-detail-loading" id="vehicle-loading" aria-label="Loading vehicle details">
+      <div class="spinner" role="status">
+        <span class="sr-only">Loading vehicle details...</span>
+      </div>
+    </div>
+
+    <!-- Error State (initially hidden, shown if vehicle not found) -->
+    <div class="vehicle-error" id="vehicle-error" hidden aria-live="polite">
+      <div class="container">
+        <div class="error-content">
+          <p class="error-icon" aria-hidden="true">&#x1F6AB;</p>
+          <h1 class="error-title">Vehicle Not Found</h1>
+          <p class="error-message">The vehicle you are looking for could not be found. It may have been sold or the link may be incorrect.</p>
+          <a href="inventory.html" class="btn btn-primary">Browse Our Inventory</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vehicle Detail Content (initially hidden, shown when data loads) -->
+    <div class="vehicle-detail-content" id="vehicle-detail-content" hidden>
+      <div class="container">
+
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <ol class="breadcrumb-list">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="inventory.html">Inventory</a></li>
+            <li class="breadcrumb-item breadcrumb-current" aria-current="page">
+              <span id="breadcrumb-vehicle">Vehicle Name</span>
+            </li>
+          </ol>
+        </nav>
+
+        <!-- Two-column vehicle layout: gallery left, details right (stacked on mobile) -->
+        <div class="vehicle-detail-grid">
+
+          <!-- Gallery Column -->
+          <div class="vehicle-gallery">
+            <!-- Main Image -->
+            <figure class="gallery-main">
+              <img
+                id="main-image"
+                src=""
+                alt=""
+                width="800"
+                height="600"
+                fetchpriority="high"
+                decoding="async"
+                class="gallery-main-img"
+              >
+              <figcaption class="sr-only" id="gallery-caption">Vehicle main image</figcaption>
+            </figure>
+
+            <!-- Thumbnail Strip -->
+            <div
+              class="thumbnail-strip"
+              id="thumbnail-strip"
+              role="group"
+              aria-label="Vehicle image thumbnails"
+            >
+              <!-- Thumbnails rendered by JavaScript -->
+            </div>
+          </div>
+
+          <!-- Details Column -->
+          <div class="vehicle-details">
+            <!-- Vehicle Title -->
+            <h1 class="vehicle-detail-title" id="vehicle-title">Vehicle Title</h1>
+
+            <!-- Pricing Section -->
+            <section class="detail-section pricing-section" aria-labelledby="pricing-heading">
+              <h2 id="pricing-heading" class="sr-only">Pricing</h2>
+              <p class="vehicle-detail-price"><span id="vehicle-price">$0</span></p>
+              <a
+                href="contact.html"
+                id="contact-cta"
+                class="btn btn-primary btn-contact-cta"
+              >Contact Us About This Vehicle</a>
+            </section>
+
+            <!-- Specifications Section -->
+            <section class="detail-section" aria-labelledby="specs-heading">
+              <h2 id="specs-heading" class="detail-section-heading">Specifications</h2>
+              <table class="specs-table" aria-label="Vehicle specifications">
+                <tbody>
+                  <tr>
+                    <th scope="row">Make</th>
+                    <td id="spec-make"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Model</th>
+                    <td id="spec-model"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Year</th>
+                    <td id="spec-year"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Price</th>
+                    <td id="spec-price"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Mileage</th>
+                    <td id="spec-mileage"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Color</th>
+                    <td id="spec-color"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Transmission</th>
+                    <td id="spec-transmission"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Fuel Type</th>
+                    <td id="spec-fuel-type"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">VIN</th>
+                    <td id="spec-vin"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Condition</th>
+                    <td id="spec-condition"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <!-- Features Section -->
+            <section class="detail-section" aria-labelledby="features-heading">
+              <h2 id="features-heading" class="detail-section-heading">Features</h2>
+              <ul class="features-list" id="features-list" aria-label="Vehicle features">
+                <!-- Features rendered by JavaScript -->
+              </ul>
+            </section>
+
+            <!-- Description Section -->
+            <section class="detail-section" aria-labelledby="description-heading">
+              <h2 id="description-heading" class="detail-section-heading">Description</h2>
+              <p id="vehicle-description" class="vehicle-description-text"></p>
+            </section>
+
+            <!-- Share Section -->
+            <section class="detail-section share-section" aria-labelledby="share-heading">
+              <h2 id="share-heading" class="detail-section-heading">Share This Vehicle</h2>
+              <div class="share-buttons">
+                <button class="btn btn-share btn-share-facebook" id="share-facebook" aria-label="Share on Facebook">
+                  Facebook
+                </button>
+                <button class="btn btn-share btn-share-twitter" id="share-twitter" aria-label="Share on Twitter">
+                  Twitter
+                </button>
+                <button class="btn btn-share btn-share-email" id="share-email" aria-label="Share via Email">
+                  Email
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <!-- Related Vehicles Section -->
+        <section class="related-vehicles-section" aria-labelledby="related-heading">
+          <h2 id="related-heading" class="related-vehicles-heading">Similar Vehicles</h2>
+          <div class="related-vehicles-grid" id="related-vehicles" aria-live="polite">
+            <!-- Related vehicles rendered by JavaScript -->
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Lightbox Modal (initially hidden) -->
+  <div
+    class="lightbox-overlay"
+    id="lightbox"
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image gallery lightbox"
+    aria-describedby="lightbox-image-desc"
+  >
+    <div class="lightbox-content">
+      <img
+        id="lightbox-image"
+        src=""
+        alt=""
+        width="1200"
+        height="900"
+        class="lightbox-img"
+      >
+      <p id="lightbox-image-desc" class="sr-only">Use arrow keys to navigate between images. Press Escape to close.</p>
+      <p class="lightbox-counter" id="lightbox-counter" aria-live="polite"></p>
+    </div>
+    <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous image">&#x276E;</button>
+    <button class="lightbox-next" id="lightbox-next" aria-label="Next image">&#x276F;</button>
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">&#x2715;</button>
+  </div>
+
+  <!-- Live region for screen reader announcements -->
+  <div class="sr-only" aria-live="polite" aria-atomic="true" id="sr-announce"></div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-col footer-brand">
+        <a href="/" class="footer-logo" aria-label="Premium Auto Sales - Home">Premium Auto Sales</a>
+        <p class="footer-tagline">Quality Pre-Owned Vehicles</p>
+        <div class="social-links" aria-label="Social media links">
+          <a href="#" class="social-link" aria-label="Follow us on Facebook" rel="noopener noreferrer">
+            <span aria-hidden="true">f</span>
+          </a>
+          <a href="#" class="social-link" aria-label="Follow us on Instagram" rel="noopener noreferrer">
+            <span aria-hidden="true">&#x1F4F7;</span>
+          </a>
+          <a href="#" class="social-link" aria-label="Follow us on Twitter" rel="noopener noreferrer">
+            <span aria-hidden="true">t</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col footer-hours">
+        <h3 class="footer-heading">Business Hours</h3>
+        <ul class="hours-list">
+          <li><span>Mon&ndash;Fri:</span> <time>9:00 AM &ndash; 6:00 PM</time></li>
+          <li><span>Saturday:</span> <time>10:00 AM &ndash; 4:00 PM</time></li>
+          <li><span>Sunday:</span> <time>Closed</time></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-links">
+        <h3 class="footer-heading">Quick Links</h3>
+        <nav aria-label="Footer navigation">
+          <ul class="footer-nav-list">
+            <li><a href="/">Home</a></li>
+            <li><a href="inventory.html">Inventory</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; <time datetime="2024">2024</time> Premium Auto Sales. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript (deferred for non-blocking load) -->
+  <script src="js/main.js" defer></script>
+  <!-- Vehicle detail page JavaScript (deferred for non-blocking load) -->
+  <script src="js/vehicle-detail.js" defer></script>
+</body>
+</html>
